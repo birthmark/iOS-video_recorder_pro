@@ -181,6 +181,8 @@
 		341E4F9B1F7618810009AFC1 /* beautify.vert in Resources */ = {isa = PBXBuildFile; fileRef = 341E4F991F7618810009AFC1 /* beautify.vert */; };
 		34A6912F1F8DC513002C6A6A /* acv_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34A6912B1F8DC513002C6A6A /* acv_util.cpp */; };
 		34A691301F8DC513002C6A6A /* muti_effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34A6912D1F8DC513002C6A6A /* muti_effect.cpp */; };
+		34C5E5C921B3E3F30008BFA3 /* KTVRecordVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */; };
+		34C5E5CA21B3E3F30008BFA3 /* KTVRecordVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */; };
 		34FA59B021B3E0D400BBFC42 /* 131_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34FA59AF21B3E0D400BBFC42 /* 131_1.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -579,6 +581,9 @@
 		34A6912C1F8DC513002C6A6A /* acv_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acv_util.h; sourceTree = "<group>"; };
 		34A6912D1F8DC513002C6A6A /* muti_effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = muti_effect.cpp; sourceTree = "<group>"; };
 		34A6912E1F8DC513002C6A6A /* muti_effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = muti_effect.h; sourceTree = "<group>"; };
+		34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVRecordVolumeView.m; sourceTree = "<group>"; };
+		34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KTVRecordVolumeView.xib; sourceTree = "<group>"; };
+		34C5E5C821B3E3F30008BFA3 /* KTVRecordVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVRecordVolumeView.h; sourceTree = "<group>"; };
 		34FA59AF21B3E0D400BBFC42 /* 131_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 131_1.mp3; path = ../../../../../../Changba/a_songstudio/131_1.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -698,6 +703,9 @@
 		18C930C01F1604E8004AE816 /* AUKit */ = {
 			isa = PBXGroup;
 			children = (
+				34C5E5C821B3E3F30008BFA3 /* KTVRecordVolumeView.h */,
+				34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */,
+				34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */,
 				18C930C11F1604E8004AE816 /* AQPlayer.h */,
 				18C930C21F1604E8004AE816 /* AQPlayer.mm */,
 				18C930C31F1604E8004AE816 /* autotune.cpp */,
@@ -1588,6 +1596,7 @@
 				18C933561F1606E7004AE816 /* whitening_hor_vertex.vert in Resources */,
 				18C932F21F1606E7004AE816 /* INSTALL in Resources */,
 				18C930981F1601A4004AE816 /* Assets.xcassets in Resources */,
+				34C5E5CA21B3E3F30008BFA3 /* KTVRecordVolumeView.xib in Resources */,
 				18C932F51F1606E7004AE816 /* libpng.3 in Resources */,
 				18C9337E1F16362A004AE816 /* cool_1.acv in Resources */,
 			);
@@ -1679,6 +1688,7 @@
 				18C931A51F1604E8004AE816 /* micro_pitchshift.cpp in Sources */,
 				34A691301F8DC513002C6A6A /* muti_effect.cpp in Sources */,
 				18C931BA1F1604E8004AE816 /* ELImageCameraRenderer.m in Sources */,
+				34C5E5C921B3E3F30008BFA3 /* KTVRecordVolumeView.m in Sources */,
 				18C931CD1F1604E8004AE816 /* recording_h264_publisher.cpp in Sources */,
 				18C931D31F1604E8004AE816 /* CAStreamBasicDescription.cpp in Sources */,
 				18C931B81F1604E8004AE816 /* ELImageProgram.m in Sources */,

@@ -9,10 +9,12 @@
 #import "LoadingView.h"
 #import "KTVPitchReverbSelectView.h"
 #import "Constants.h"
+#import "KTVRecordVolumeView.h"
 
 #define buttonWidth 50.0f
+#define VocalControlPartHeight 35.f
 
-@interface ELPushStreamViewController () <ELVideoEncoderStatusDelegate, KTVAUGraphRecorderDelegate, ELVideoRecordingStudioDelegate>
+@interface ELPushStreamViewController () <ELVideoEncoderStatusDelegate, KTVAUGraphRecorderDelegate, ELVideoRecordingStudioDelegate, KTVRecordVolumeViewDelegate>
 {
     BOOL _started;
     BOOL _userStarted;
@@ -25,6 +27,7 @@
     AudioEncoderAdapter*            _audioEncoder;
     KTVAUGraphRecorder*             _audioRecorder;
     ELVideoRecordingStudio*         _recordingStudio;
+    KTVRecordVolumeView*            _volumeView;
     
     NSTimer*                        _musicTimeMonitorTimer;
     //当前选定的视频滤镜
@@ -34,6 +37,8 @@
 @property(nonatomic,strong) ELPushStreamMetadata *metadata;
 @property(nonatomic,strong) UIButton *frontBackSwitchButton;
 @property(nonatomic,strong) UIButton *pushButton;
+@property(nonatomic,strong) UIButton *effectPopButton;
+@property(nonatomic,strong) UIButton *effectVallyButton;
 //滤镜选择
 @property(nonatomic,strong) KTVPitchReverbSelectView *videoFilterEffectSelect;
 
@@ -46,6 +51,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self pushButton];
+    [self initEfectBtns];
+    [self initVolumeView];
     [self frontBackSwitchButton];
     [self initVideoFilterEffectView];
     CGRect bounds = self.view.bounds;
@@ -97,10 +104,64 @@
                                                                                                  }
                                                                                              }];
         _videoFilterEffectSelect.backgroundColor = UIColorFromRGB(0xffffff);
-        [self.view addSubview:_videoFilterEffectSelect];
+//        [self.view addSubview:_videoFilterEffectSelect];
     }
 }
 
+-(void)initVolumeView
+{
+    CGFloat screenWidth = self.view.bounds.size.width;
+//    CGFloat screenHeight = self.view.bounds.size.height;
+    float humanVolumeDB  = VocalParamHumanVolumeDefault;
+    float musicVolumeDB = VocalParamMusicVolumeDefault;
+    float volumeViewHeight = VocalControlPartHeight + VocalControlPartHeight;
+    _volumeView = [KTVRecordVolumeView viewWithHumanVolume:humanVolumeDB
+                                           accompanyVolume:musicVolumeDB];
+    [_volumeView setMusicSliderMinValue:VocalParamMusicVolumeMin maxValue:VocalParamMusicVolumeMax];
+    [_volumeView setHumanSliderMinValue:VocalParamHumanVolumeMin maxValue:VocalParamHumanVolumeMax];
+    _volumeView.delegate = self;
+    [_volumeView setWithHumanVolume:humanVolumeDB accompanyVolume:musicVolumeDB];
+    _volumeView.frame = CGRectMake(0.f, 60.f, screenWidth, volumeViewHeight);
+    [self.view addSubview:_volumeView];
+}
+
+-(void) initEfectBtns
+{
+    if(!_effectPopButton)
+    {
+        CGFloat screenWidth = self.view.bounds.size.width;
+        CGFloat screenHeight = self.view.bounds.size.height;
+        _effectPopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_effectPopButton];
+        [_effectPopButton setTitle:@"POP" forState:UIControlStateNormal];
+        [_effectPopButton setTitle:@"POP" forState:UIControlStateSelected];
+        [_effectPopButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_effectPopButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        CGRect huge = CGRectMake((screenWidth - buttonWidth) / 2, screenHeight - 2 * buttonWidth - 30, buttonWidth, buttonWidth);
+        [_effectPopButton setFrame:huge];
+        _effectPopButton.layer.cornerRadius = buttonWidth/2.0f;
+        _effectPopButton.layer.borderWidth = 1.0f;
+        _effectPopButton.layer.borderColor = [UIColor blackColor].CGColor;
+        [_effectPopButton addTarget:self action:@selector(OnEffectPop:) forControlEvents:UIControlEventTouchUpInside];
+        //按钮初始状态
+        [_effectPopButton setSelected:NO];
+        _effectVallyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_effectVallyButton];
+        [_effectVallyButton setTitle:@"Magic" forState:UIControlStateNormal];
+        [_effectVallyButton setTitle:@"Magic" forState:UIControlStateSelected];
+        [_effectVallyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_effectVallyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        huge = CGRectMake(100, screenHeight - 2 * buttonWidth - 30, buttonWidth, buttonWidth);
+        [_effectVallyButton setFrame:huge];
+        _effectVallyButton.layer.cornerRadius = buttonWidth/2.0f;
+        _effectVallyButton.layer.borderWidth = 1.0f;
+        _effectVallyButton.layer.borderColor = [UIColor blackColor].CGColor;
+        [_effectVallyButton addTarget:self action:@selector(OnEffectMagic:) forControlEvents:UIControlEventTouchUpInside];
+        //按钮初始状态
+        [_effectVallyButton setSelected:NO];
+        
+    }
+}
 
 -(UIButton*)pushButton
 {
@@ -189,22 +250,47 @@
 }
 
 // Called when start/stop button is pressed
+- (void)OnEffectPop:(id)sender {
+    BOOL isSelected = [_effectPopButton isSelected];
+    if(isSelected) {
+        [self.audioRecorder applyEffect:(KTVEffectCategoryRecOrigin)];
+        NSLog(@"Change To KTVEffectCategoryRecOrigin...");
+    } else {
+        [self.audioRecorder applyEffect:(KTVEffectCategoryChangJiang)];
+        NSLog(@"Change To KTVEffectCategoryChangJiang...");
+    }
+    [_effectPopButton setSelected:!isSelected];
+    [_effectVallyButton setSelected:NO];
+}
+- (void)OnEffectMagic:(id)sender {
+    BOOL isSelected = [_effectVallyButton isSelected];
+    if(isSelected) {
+        [self.audioRecorder applyEffect:(KTVEffectCategoryRecOrigin)];
+        NSLog(@"Change To KTVEffectCategoryRecOrigin...");
+    } else {
+        [self.audioRecorder applyEffect:(KTVEffectCategoryGeShen)];
+        NSLog(@"Change To KTVEffectCategoryGeShen...");
+    }
+    [_effectVallyButton setSelected:!isSelected];
+    [_effectPopButton setSelected:NO];
+}
+
 - (void)OnStartStop:(id)sender {
     if (_started)
     {
         _userStarted = NO;
         [self stop];
-        if(_musicTimeMonitorTimer) {
-            [_musicTimeMonitorTimer invalidate];
-        }
+//        if(_musicTimeMonitorTimer) {
+//            [_musicTimeMonitorTimer invalidate];
+//        }
         [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
     else
     {
         _userStarted = YES;
         [self start];
-        _musicTimeMonitorTimer = [NSTimer scheduledTimerWithTimeInterval:0.015 target:self selector:@selector(displayMusicTime) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:_musicTimeMonitorTimer forMode:UITrackingRunLoopMode];
+//        _musicTimeMonitorTimer = [NSTimer scheduledTimerWithTimeInterval:0.015 target:self selector:@selector(displayMusicTime) userInfo:nil repeats:YES];
+//        [[NSRunLoop currentRunLoop] addTimer:_musicTimeMonitorTimer forMode:UITrackingRunLoopMode];
         [UIApplication sharedApplication].idleTimerDisabled = YES;
     }
 }
@@ -446,5 +532,15 @@
         UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"连接RTMP服务器失败" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil];
         [alterView show];
     });
+}
+
+#pragma - KTVRecordVolumeViewDelegate
+- (void)volumeViewHumanVolumeDidChanged:(NSInteger)humanVolume
+{
+    [self.audioRecorder setHumanVolumeDB:humanVolume];
+}
+- (void)volumeViewAccompanyVolumeDidChanged:(NSInteger)accompanyVolume
+{
+    [self.audioRecorder setMusicVolumeDB:accompanyVolume];
 }
 @end

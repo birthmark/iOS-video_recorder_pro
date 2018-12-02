@@ -51,6 +51,8 @@
 
 - (void)startRecord;
 
+- (void)startRecordWidthMusic:(NSString *)filePath;
+
 - (void)stopRecord;
 
 - (void)runDSP:(AudioBufferList *)ioData;

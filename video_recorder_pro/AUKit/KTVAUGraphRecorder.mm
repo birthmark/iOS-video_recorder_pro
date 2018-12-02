@@ -229,7 +229,7 @@ static void propListener_routechange(void *                  inClientData,
     // our default category -- we change this for conversion and playback appropriately
     [sessionInstance setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     
-    [sessionInstance setPreferredIOBufferDuration:AUDIO_RECORD_BUFFER_DURATION error:&error];
+    [sessionInstance setPreferredIOBufferDuration:AUDIO_RECORD_BUFFER_DURATION * 2 error:&error];
     
     [sessionInstance setPreferredSampleRate:[KTVAUGraphController liveRoomHardwareSampleRate] error:&error];
     
@@ -510,6 +510,15 @@ static void propListener_routechange(void *                  inClientData,
     [self addRouteChangeListener];
     [self addMixerRenderNofity];
     [self start];
+}
+
+- (void)startRecordWidthMusic:(NSString *)filePath
+{
+    // 开始直播
+    [self addRouteChangeListener];
+    [self addMixerRenderNofity];
+    [self start];
+    [self playMusicFile:filePath];
 }
 
 - (void)stopRecord

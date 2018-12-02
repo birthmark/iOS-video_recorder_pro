@@ -26,6 +26,7 @@
     KTVAUGraphRecorder*             _audioRecorder;
     ELVideoRecordingStudio*         _recordingStudio;
     
+    NSTimer*                        _musicTimeMonitorTimer;
     //当前选定的视频滤镜
     NSInteger _currentSelectedFilterIndex;
 }
@@ -163,11 +164,18 @@
 
 - (void)startAudioRecord
 {
-    [self.audioRecorder startRecord];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"131_1" ofType:@"mp3"];
+    [self.audioRecorder startRecordWidthMusic:filePath];
     _audioEncoder = new AudioEncoderAdapter();
     char* audioCodecName = [ELPushStreamMetadata nsstring2char:kAudioCodecName];
     _audioEncoder->init(LivePacketPool::GetInstance(), [KTVAUGraphController liveRoomHardwareSampleRate], kAudioChannels, kAudioBitRate, audioCodecName);
     delete[] audioCodecName;
+}
+
+- (void)displayMusicTime
+{
+    float timeInSecs = [self.audioRecorder musicPlayingTime];
+    NSLog(@"timeInSecs is %.3f", timeInSecs);
 }
 
 - (void)stopAudioRecord
@@ -186,12 +194,17 @@
     {
         _userStarted = NO;
         [self stop];
+        if(_musicTimeMonitorTimer) {
+            [_musicTimeMonitorTimer invalidate];
+        }
         [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
     else
     {
         _userStarted = YES;
         [self start];
+        _musicTimeMonitorTimer = [NSTimer scheduledTimerWithTimeInterval:0.015 target:self selector:@selector(displayMusicTime) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_musicTimeMonitorTimer forMode:UITrackingRunLoopMode];
         [UIApplication sharedApplication].idleTimerDisabled = YES;
     }
 }

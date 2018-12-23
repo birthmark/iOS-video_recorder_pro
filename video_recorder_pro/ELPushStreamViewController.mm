@@ -226,7 +226,7 @@
 - (void)startAudioRecord
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"131_1" ofType:@"mp3"];
-    [self.audioRecorder startRecordWidthMusic:filePath];
+    [self.audioRecorder startRecordWithMusic:filePath startOffset:15.0f];
     _audioEncoder = new AudioEncoderAdapter();
     char* audioCodecName = [ELPushStreamMetadata nsstring2char:kAudioCodecName];
     _audioEncoder->init(LivePacketPool::GetInstance(), [KTVAUGraphController liveRoomHardwareSampleRate], kAudioChannels, kAudioBitRate, audioCodecName);

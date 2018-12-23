@@ -51,7 +51,8 @@
 
 - (void)startRecord;
 
-- (void)startRecordWidthMusic:(NSString *)filePath;
+- (void)startRecordWithMusic:(NSString *)filePath;
+- (void)startRecordWithMusic:(NSString *)filePath startOffset:(NSTimeInterval) startOffset;
 
 - (void)stopRecord;
 
@@ -59,6 +60,7 @@
 
 // 播放伴奏文件，支持循环/非循环播放
 - (void)playMusicFile:(NSString *)filePath;
+- (void)playMusicFile:(NSString *)filePath startOffset:(NSTimeInterval) startOffset;
 // 暂停播放当前伴奏
 - (void)pauseMusicPlay;
 // 继续播放当前伴奏

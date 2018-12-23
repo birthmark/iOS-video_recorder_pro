@@ -8,6 +8,7 @@
 
 #import "KTVAUGraphController.h"
 #import "CAXException.h"
+#import "UIDevice+JKHardware.h"
 
 static const UInt32 kMaximumFramesPerSlice = 4096;
 static const int kMaximumConnectionPerNode = 10;
@@ -919,15 +920,24 @@ static const int kMaximumHeadInputNode = 3;
     return 44100;
 }
 
+//+ (double)liveRoomHardwareSampleRate
+//{
+//#warning 需要依赖
+//    NSString* modelIdentifier = [[UIDevice currentDevice] modelIdentifier];
+//    if (([modelIdentifier rangeOfString:@"iPhone"].location != NSNotFound) && ([modelIdentifier compare:@"iPhone8,0"] == NSOrderedDescending)) {
+//        return 48000;
+//    }
+////    if ([CommonTools GetIntSettingsByKey:SETTING_KEY_HIGHSAMPLINGMODE defaultInt:0] == 0)
+////        return 22050;
+//    return 44100;
+//}
+
 + (double)liveRoomHardwareSampleRate
 {
-#warning 需要依赖
-    NSString* modelIdentifier = [[UIDevice currentDevice] modelIdentifier];
-    if (([modelIdentifier rangeOfString:@"iPhone"].location != NSNotFound) && ([modelIdentifier compare:@"iPhone8,0"] == NSOrderedDescending)) {
+    NSString* modelIdentifier = [UIDevice jk_platformString];
+    if ([modelIdentifier compare:@"iPhone 6 Plus"] == NSOrderedDescending) {
         return 48000;
     }
-//    if ([CommonTools GetIntSettingsByKey:SETTING_KEY_HIGHSAMPLINGMODE defaultInt:0] == 0)
-//        return 22050;
     return 44100;
 }
 

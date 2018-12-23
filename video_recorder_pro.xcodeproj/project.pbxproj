@@ -183,7 +183,8 @@
 		34A691301F8DC513002C6A6A /* muti_effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34A6912D1F8DC513002C6A6A /* muti_effect.cpp */; };
 		34C5E5C921B3E3F30008BFA3 /* KTVRecordVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */; };
 		34C5E5CA21B3E3F30008BFA3 /* KTVRecordVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */; };
-		34FA59B021B3E0D400BBFC42 /* 131_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 34FA59AF21B3E0D400BBFC42 /* 131_1.mp3 */; };
+		AC9389C721C647AA006BC3BC /* 131_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC9389C621C647A9006BC3BC /* 131_1.mp3 */; };
+		AC9389CA21C64E6C006BC3BC /* UIDevice+JKHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9389C921C64E6C006BC3BC /* UIDevice+JKHardware.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -584,7 +585,9 @@
 		34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVRecordVolumeView.m; sourceTree = "<group>"; };
 		34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KTVRecordVolumeView.xib; sourceTree = "<group>"; };
 		34C5E5C821B3E3F30008BFA3 /* KTVRecordVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVRecordVolumeView.h; sourceTree = "<group>"; };
-		34FA59AF21B3E0D400BBFC42 /* 131_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 131_1.mp3; path = ../../../../../../Changba/a_songstudio/131_1.mp3; sourceTree = "<group>"; };
+		AC9389C621C647A9006BC3BC /* 131_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 131_1.mp3; sourceTree = "<group>"; };
+		AC9389C821C64E6B006BC3BC /* UIDevice+JKHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+JKHardware.h"; sourceTree = "<group>"; };
+		AC9389C921C64E6C006BC3BC /* UIDevice+JKHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+JKHardware.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -703,6 +706,8 @@
 		18C930C01F1604E8004AE816 /* AUKit */ = {
 			isa = PBXGroup;
 			children = (
+				AC9389C821C64E6B006BC3BC /* UIDevice+JKHardware.h */,
+				AC9389C921C64E6C006BC3BC /* UIDevice+JKHardware.m */,
 				34C5E5C821B3E3F30008BFA3 /* KTVRecordVolumeView.h */,
 				34C5E5C621B3E3F30008BFA3 /* KTVRecordVolumeView.m */,
 				34C5E5C721B3E3F30008BFA3 /* KTVRecordVolumeView.xib */,
@@ -1413,7 +1418,7 @@
 		18C9337C1F16362A004AE816 /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				34FA59AF21B3E0D400BBFC42 /* 131_1.mp3 */,
+				AC9389C621C647A9006BC3BC /* 131_1.mp3 */,
 				18C9337D1F16362A004AE816 /* cool_1.acv */,
 			);
 			path = resource;
@@ -1517,7 +1522,7 @@
 				TargetAttributes = {
 					18C930871F1601A4004AE816 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = KFSKA2NQKM;
+						DevelopmentTeam = U4BCBA6SZN;
 						ProvisioningStyle = Automatic;
 					};
 					18C930A01F1601A4004AE816 = {
@@ -1567,7 +1572,6 @@
 				18C932F71F1606E7004AE816 /* libpngpf.3 in Resources */,
 				18C933551F1606E7004AE816 /* whitening_hor_fragment.frag in Resources */,
 				18C932F31F1606E7004AE816 /* libpng-config.in in Resources */,
-				34FA59B021B3E0D400BBFC42 /* 131_1.mp3 in Resources */,
 				18C931A81F1604E8004AE816 /* play_back_effect_param.plist in Resources */,
 				18C932F91F1606E7004AE816 /* png.5 in Resources */,
 				18C9333C1F1606E7004AE816 /* smooth_skin_shader.glsl in Resources */,
@@ -1588,6 +1592,7 @@
 				18C932FC1F1606E7004AE816 /* pngbar.png in Resources */,
 				18C9332E1F1606E7004AE816 /* optimized_blur_shader.glsl in Resources */,
 				341E4F9A1F7618810009AFC1 /* beautify.frag in Resources */,
+				AC9389C721C647AA006BC3BC /* 131_1.mp3 in Resources */,
 				18C932F81F1606E7004AE816 /* LICENSE in Resources */,
 				18C931BF1F1604E8004AE816 /* .gitignore in Resources */,
 				18C933581F1606E7004AE816 /* whitening_ver_vertex.vert in Resources */,
@@ -1735,6 +1740,7 @@
 				18C931BD1F1604E8004AE816 /* ELImageVideoEncoder.m in Sources */,
 				18C931A21F1604E8004AE816 /* KTVAUGraphRecorder.mm in Sources */,
 				18C9308D1F1601A4004AE816 /* main.m in Sources */,
+				AC9389CA21C64E6C006BC3BC /* UIDevice+JKHardware.m in Sources */,
 				18C931B71F1604E8004AE816 /* ELImageOutput.m in Sources */,
 				18C933091F1606E7004AE816 /* pngwio.c in Sources */,
 				34A6912F1F8DC513002C6A6A /* acv_util.cpp in Sources */,
@@ -1875,7 +1881,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KFSKA2NQKM;
+				DEVELOPMENT_TEAM = U4BCBA6SZN;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/video_recorder_pro/FFmpeg/include";
 				INFOPLIST_FILE = video_recorder_pro/Info.plist;
@@ -1886,7 +1892,7 @@
 					"$(PROJECT_DIR)/video_recorder_pro/FFmpeg",
 				);
 				OTHER_LDFLAGS = "-l\"z\"";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.phuket.tour.video-recorder-pro-book";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phuket.tour.video-recorder-pro-book-wenyuan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1895,7 +1901,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KFSKA2NQKM;
+				DEVELOPMENT_TEAM = U4BCBA6SZN;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/video_recorder_pro/FFmpeg/include";
 				INFOPLIST_FILE = video_recorder_pro/Info.plist;
@@ -1906,7 +1912,7 @@
 					"$(PROJECT_DIR)/video_recorder_pro/FFmpeg",
 				);
 				OTHER_LDFLAGS = "-l\"z\"";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.phuket.tour.video-recorder-pro-book";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.phuket.tour.video-recorder-pro-book-wenyuan";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

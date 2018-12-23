@@ -74,6 +74,7 @@ class AQPlayer
 		
 		void SetLooping(Boolean inIsLooping)	{ mIsLooping = inIsLooping; }
 		void CreateQueueForFile(CFStringRef inFilePath);
+        void CreateQueueForFile(CFStringRef inFilePath, NSTimeInterval startOffset);
 		void DisposeQueue(Boolean inDisposeFile);
         void SetVolume (AudioQueueParameterValue volume);
         void SetPitch (AudioQueueParameterValue pitch);
@@ -94,6 +95,7 @@ class AQPlayer
 		Boolean							mIsInitialized;
 		UInt32							mNumPacketsToRead;
 		SInt64							mCurrentPacket;
+        SInt64                          mOffsetPacket;
 		UInt32							mIsRunning;
 		Boolean							mIsDone;
 		Boolean							mIsLooping;

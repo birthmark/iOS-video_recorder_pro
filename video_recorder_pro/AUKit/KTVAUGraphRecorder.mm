@@ -232,7 +232,9 @@ static void propListener_routechange(void *                  inClientData,
     [sessionInstance setPreferredIOBufferDuration:AUDIO_RECORD_BUFFER_DURATION * 2 error:&error];
     
     [sessionInstance setPreferredSampleRate:[KTVAUGraphController liveRoomHardwareSampleRate] error:&error];
-    
+    if (@available(iOS 10.0, *)) {
+        [sessionInstance setAggregatedIOPreference:AVAudioSessionIOTypeAggregated error:nil];
+    }
     // activate the audio session
     [sessionInstance setActive:YES error:&error];
 }
@@ -512,13 +514,18 @@ static void propListener_routechange(void *                  inClientData,
     [self start];
 }
 
-- (void)startRecordWidthMusic:(NSString *)filePath
+- (void)startRecordWithMusic:(NSString *)filePath
+{
+    [self startRecordWithMusic:filePath startOffset:0.f];
+}
+
+- (void)startRecordWithMusic:(NSString *)filePath startOffset:(NSTimeInterval) startOffset
 {
     // 开始直播
     [self addRouteChangeListener];
     [self addMixerRenderNofity];
     [self start];
-    [self playMusicFile:filePath];
+    [self playMusicFile:filePath startOffset:startOffset];
 }
 
 - (void)stopRecord
@@ -536,6 +543,12 @@ static void propListener_routechange(void *                  inClientData,
 - (void)playMusicFile:(NSString *)filePath
 {
     // 新播放一首伴奏，都要停止之前播放的伴奏
+    [self playMusic:filePath startOffset:0.f];
+}
+
+- (void)playMusicFile:(NSString *)filePath startOffset:(NSTimeInterval) startOffset
+{
+    // 新播放一首伴奏，都要停止之前播放的伴奏
     [self stopMusicPlay];
     
     _musicFilePath = filePath;
@@ -544,8 +557,8 @@ static void propListener_routechange(void *                  inClientData,
     totalFramesToPlay = 0;
     _isMusicPlaying = YES;
     
-    [self playMusic:_musicFilePath startOffset:0.f];
-    [self aqplayerPlayMusic:_musicFilePath];
+    [self playMusic:_musicFilePath startOffset:startOffset];
+    [self aqplayerPlayMusic:_musicFilePath startOffset:startOffset];
 }
 
 // 暂停播放当前伴奏
@@ -646,7 +659,7 @@ static void propListener_routechange(void *                  inClientData,
 
 #pragma mark- AQPlayer Play Control
 
-- (void)aqplayerPlayMusic:(NSString *)filePath
+- (void)aqplayerPlayMusic:(NSString *)filePath startOffset:(NSTimeInterval) startOffset
 {
     if (_aqplayer) {
         _aqplayer->DisposeQueue(true);
@@ -654,7 +667,7 @@ static void propListener_routechange(void *                  inClientData,
         _aqplayer = NULL;
     }
     _aqplayer = new AQPlayer();
-    _aqplayer->CreateQueueForFile((__bridge CFStringRef)filePath);
+    _aqplayer->CreateQueueForFile((__bridge CFStringRef)filePath, startOffset);
     if (isHeadSet) {
         [self changeToHeadSetMode];
     } else {

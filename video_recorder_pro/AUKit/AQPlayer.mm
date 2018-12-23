@@ -141,6 +141,7 @@ AQPlayer::AQPlayer() :
 	mIsInitialized(false),
 	mNumPacketsToRead(0),
 	mCurrentPacket(0),
+    mOffsetPacket(0),
 	mIsDone(false),
 	mIsLooping(false) { }
 
@@ -158,7 +159,7 @@ OSStatus AQPlayer::StartQueue(BOOL inResume)
 	
 	// if we are not resuming, we also should restart the file read index
 	if (!inResume) {
-		mCurrentPacket = 0;
+		mCurrentPacket = mOffsetPacket;
 
         // prime the queue with some data before starting
         for (int i = 0; i < kNumberBuffers; ++i) {
@@ -190,32 +191,39 @@ OSStatus AQPlayer::PauseQueue()
 	return result;
 }
 
-void AQPlayer::CreateQueueForFile(CFStringRef inFilePath) 
-{	
-	CFURLRef sndFile = NULL; 
-
-	try {
-		if (mFilePath == NULL)
-		{
-			mIsLooping = false;
-			
-			sndFile = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, inFilePath, kCFURLPOSIXPathStyle, false);
-			if (!sndFile) { printf("can't parse file path\n"); return; }
-			
+void AQPlayer::CreateQueueForFile(CFStringRef inFilePath, NSTimeInterval startOffset)
+{
+    CFURLRef sndFile = NULL;
+    
+    try {
+        if (mFilePath == NULL)
+        {
+            mIsLooping = false;
+            
+            sndFile = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, inFilePath, kCFURLPOSIXPathStyle, false);
+            if (!sndFile) { printf("can't parse file path\n"); return; }
+            
             OSStatus rc = AudioFileOpenURL (sndFile, kAudioFileReadPermission, 0/*inFileTypeHint*/, &mAudioFile);
             CFRelease(sndFile); // release sndFile here to quiet analyzer
-			XThrowIfError(rc, "can't open file");
-             
-			UInt32 size = sizeof(mDataFormat);
-			XThrowIfError(AudioFileGetProperty(mAudioFile, kAudioFilePropertyDataFormat, &size, &mDataFormat), "couldn't get file's data format");
-			mFilePath = CFStringCreateCopy(kCFAllocatorDefault, inFilePath);
-		}
-		SetupNewQueue();		
+            XThrowIfError(rc, "can't open file");
+            
+            UInt32 size = sizeof(mDataFormat);
+            XThrowIfError(AudioFileGetProperty(mAudioFile, kAudioFilePropertyDataFormat, &size, &mDataFormat), "couldn't get file's data format");
+            mFilePath = CFStringCreateCopy(kCFAllocatorDefault, inFilePath);
+            
+            mOffsetPacket = mDataFormat.mSampleRate / mDataFormat.mFramesPerPacket * startOffset;
+        }
+        SetupNewQueue();
     }
-	catch (CAXException e) {
-		char buf[256];
-		fprintf(stderr, "Error: %s (%s)\n", e.mOperation, e.FormatError(buf));
-	}
+    catch (CAXException e) {
+        char buf[256];
+        fprintf(stderr, "Error: %s (%s)\n", e.mOperation, e.FormatError(buf));
+    }
+}
+
+void AQPlayer::CreateQueueForFile(CFStringRef inFilePath)
+{
+    CreateQueueForFile(inFilePath, 0.f);
 }
 
 void AQPlayer::SetupNewQueue() 

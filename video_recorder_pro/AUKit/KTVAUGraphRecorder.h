@@ -80,6 +80,8 @@
 
 - (void)resetParam;
 
++ (NSTimeInterval) getDuration:(NSString *)filePath;
+
 - (void)testEffect:(NSInteger)testCaseIndex;
 - (void)testPitch:(NSInteger)testCaseIndex;
 

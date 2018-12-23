@@ -593,6 +593,18 @@ static void propListener_routechange(void *                  inClientData,
     [self stopAQPlayer];
 }
 
++ (NSTimeInterval) getDuration:(NSString *)filePath
+{
+    NSTimeInterval duration = 0.0;
+    if (filePath) {
+        NSURL *url = [NSURL fileURLWithPath:filePath];
+        AVURLAsset *audioAsset = [AVURLAsset assetWithURL:url];
+        CMTime durationTime = audioAsset.duration;
+        duration = CMTimeGetSeconds(durationTime);
+    }
+    return duration;
+}
+
 - (void)playMusic:(NSString *)filePath startOffset:(NSTimeInterval)startOffset
 {
     try {

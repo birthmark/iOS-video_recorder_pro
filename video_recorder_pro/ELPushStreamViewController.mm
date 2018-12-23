@@ -226,6 +226,8 @@
 - (void)startAudioRecord
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"131_1" ofType:@"mp3"];
+    NSTimeInterval duration = [KTVAUGraphRecorder getDuration:filePath];
+    NSLog(@"duration is : %lf", duration);
     [self.audioRecorder startRecordWithMusic:filePath startOffset:15.0f];
     _audioEncoder = new AudioEncoderAdapter();
     char* audioCodecName = [ELPushStreamMetadata nsstring2char:kAudioCodecName];
